@@ -3,6 +3,7 @@ package ComparatorExample;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import ComparatorExample.Employee;
 
 public class MainClassRunner {
     public static void main(String[] args) {
@@ -10,7 +11,7 @@ public class MainClassRunner {
         arrayList1.add(new Employee(1,"Dhruv"));
         arrayList1.add(new Employee(2,"Harsh"));
         Set<Employee> set1 = new HashSet<>();
-        Employee e = new Employee(1,"Harsh");
+        Employee e = new ComparatorExample.Employee(1,"Harsh");
         Employee e1 = new Employee(1,"Harsh");
         set1.add(e);
         set1.add(e1);

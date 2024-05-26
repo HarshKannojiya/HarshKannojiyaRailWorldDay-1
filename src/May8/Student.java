@@ -1,5 +1,6 @@
 package May8;
-
+import May8.Subject;
+import May8.School;
 public class Student {
 
 	private String name;
@@ -9,7 +10,7 @@ public class Student {
 	public Student() {
 		
 	}
-	public Student(String name,School school,Subject subject) {
+	public Student(String name, May8.School school, Subject subject) {
 		this.name = name;
 		this.school=school;
 		this.subject=subject;
