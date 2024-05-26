@@ -16,4 +16,32 @@ public class EmployeeDAO {
             stmt.executeUpdate();
         }
     }
+    public  List<Employee> getAllEmployees() throws SQLException{
+        List<Employee> employees = new ArrayList<>();
+        String sql = "SELECT * FROM employees";
+        try (Connection conn = DBUtil.getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Employee employee = new Employee();
+                employee.setId(rs.getInt("id"));
+                employee.setName(rs.getString("name"));
+                employee.setDepartment(rs.getString("department"));
+                employee.setSalary(rs.getDouble("salary"));
+                employees.add(employee);
+            }
+        }
+        return employees;
+    }
+
+    public void updateEmployee(Employee employee) throws SQLException {
+        String sql = "UPDATE employees SET name = ?,department = ?,salary = ? WHERE id = ?";
+        try(Connection conn = DBUtil.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ){
+            stmt.setString(1,employee.getName());
+            stmt.setString(2,employee.getDepartment());
+            stmt.setDouble(3,employee.getSalary());
+            stmt.setInt(4,employee.getId());
+            stmt.executeUpdate();
+        }
+    }
 }

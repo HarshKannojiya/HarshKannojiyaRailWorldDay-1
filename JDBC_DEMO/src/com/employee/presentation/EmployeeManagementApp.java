@@ -72,18 +72,39 @@ public class EmployeeManagementApp {
         System.out.println("Employee added successfully!");
 
     }
+    private void viewAllEmployees() throws SQLException {
+        EmployeeService employeeService = new EmployeeService();
+        List<Employee> employees = employeeService.getAllEmployees();
+        for (Employee employee : employees) {
+            System.out.println("ID: " + employee.getId() + ", Name: " + employee.getName() +
+                    ", Department: " + employee.getDepartment() + ", Salary: " + employee.getSalary());
+        }
+    }
 
     private void deleteEmployee() {
 
     }
 
-    private void updateEmployee() {
+    private void updateEmployee() throws SQLException {
+        System.out.println("Enter Employee id to Update : ");
+        int id = Integer.parseInt(scanner.nextLine());
+        System.out.print("Enter new name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter new department: ");
+        String department = scanner.nextLine();
+        System.out.print("Enter new salary: ");
+        double salary = Double.parseDouble(scanner.nextLine());
 
+        Employee employee = new Employee();
+        employee.setId(id);
+        employee.setName(name);
+        employee.setDepartment(department);
+        employee.setSalary(salary);
+
+        employeeService.updateEmployee(employee);
     }
 
-    private void viewAllEmployees() {
 
-    }
 
 
 

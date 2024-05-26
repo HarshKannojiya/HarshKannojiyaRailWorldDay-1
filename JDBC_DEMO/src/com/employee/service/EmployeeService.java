@@ -12,5 +12,12 @@ public class EmployeeService {
     public void addEmployee(Employee employee) throws SQLException {
         employeeDAO.addEmployee(employee);
     }
+    public List<Employee> getAllEmployees() throws SQLException {
+        return employeeDAO.getAllEmployees();
+    }
+
+    public void updateEmployee(Employee employee) throws SQLException {
+        employeeDAO.updateEmployee(employee);
+    }
 
 }
