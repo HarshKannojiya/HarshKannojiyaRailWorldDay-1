@@ -1,7 +1,5 @@
 package ComparatorExample;
 
-import java.util.Comparator;
-
 public class Employee {
     int id;
     String name;

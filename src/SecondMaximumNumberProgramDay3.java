@@ -1,5 +1,9 @@
+import java.util.Scanner;
+
 class SecondMaximumNumberProgramDay3{
 	public static void main(String[] args) throws Exception {
+
+
 		Scanner sc = new Scanner(System.in);
 		int s = sc.nextInt();
 		int [] arr = new int[s];

@@ -1,3 +1,5 @@
+package src;
+
 import java.io.*;
 class DisariumNumberUsingRecursion{
     private int num;
@@ -6,7 +8,6 @@ class DisariumNumberUsingRecursion{
         num = n;
         size = 0;
     }
-
 
 
     void countDigit(){

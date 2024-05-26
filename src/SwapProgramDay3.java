@@ -1,4 +1,4 @@
-public class SwapPorgramDay3 {
+class SwapPorgramDay3 {
 
 	public static void main(String[] args) throws Exception {
 		//swap two variables without using third variable
