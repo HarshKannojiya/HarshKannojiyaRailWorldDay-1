@@ -44,4 +44,14 @@ public class EmployeeDAO {
             stmt.executeUpdate();
         }
     }
+    public void deleteEmployee(Employee employee) throws SQLException {
+        String sql = "DELETE FROM employees WHERE id = ?";
+        try(Connection conn = DBUtil.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ){
+            stmt.setInt(1,employee.getId());
+            stmt.executeUpdate();
+        }
+
+    }
 }

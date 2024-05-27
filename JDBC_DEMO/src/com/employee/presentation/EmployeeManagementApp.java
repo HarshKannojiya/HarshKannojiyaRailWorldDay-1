@@ -81,9 +81,7 @@ public class EmployeeManagementApp {
         }
     }
 
-    private void deleteEmployee() {
 
-    }
 
     private void updateEmployee() throws SQLException {
         System.out.println("Enter Employee id to Update : ");
@@ -104,6 +102,16 @@ public class EmployeeManagementApp {
         employeeService.updateEmployee(employee);
     }
 
+    private void deleteEmployee() throws SQLException {
+        System.out.println("Enter id to delete Employee : ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        Employee employee = new Employee();
+        employee.setId(id);
+        employeeService.deleteEmployee(employee);
+        System.out.println("Employee deleted successfully...");
+
+    }
 
 
 

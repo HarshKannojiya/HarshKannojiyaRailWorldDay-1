@@ -20,4 +20,7 @@ public class EmployeeService {
         employeeDAO.updateEmployee(employee);
     }
 
+    public void deleteEmployee(Employee employee) throws SQLException {
+        employeeDAO.deleteEmployee(employee);
+    }
 }
