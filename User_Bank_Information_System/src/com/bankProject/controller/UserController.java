@@ -37,70 +37,77 @@ public class UserController {
                boolean isAdm = userService.isAdmin(admin);
                 System.out.println(isAdm);
                 if(isAdm==true){
-                    System.out.println("1. Add User to bank and create Bank Account");
-                    System.out.println("2. Get User");
-                    System.out.println("3. Get All Users");
-                    System.out.println("4. Update User");
-                    System.out.println("5. Delete User");
-                    System.out.println("6. Create Bank IFSC Code");
-                    System.out.println("7. Get Bank Account Details");
-                    System.out.println("8. Get All Bank Accounts");
-                    System.out.println("9. Update Bank Account");
-                    System.out.println("10. Delete Bank Account");
-                    System.out.println("11. Add Transaction");
-                    System.out.println("12. Get Transactions by Account ID");
-                    System.out.println("13. Get All Transactions");
-                    System.out.println("14. Exit");
-                    System.out.print("Enter choice: ");
-                    int choice = scanner.nextInt();
-                    scanner.nextLine(); // Consume newline
-
-                    switch (choice) {
-                        case 1:
-                            addUser();
-                            break;
-                        case 2:
-                            getUser();
-                            break;
-                        case 3:
-                            getAllUsers();
-                            break;
-                        case 4:
-                            updateUser();
-                            break;
-                        case 5:
-                            deleteUser();
-                            break;
-                        case 6:
-                            addBankAccount();
-                            break;
-                        case 7:
-                            getBankAccount();
-                            break;
-                        case 8:
-                            getAllBankAccounts();
-                            break;
-                        case 9:
-                            updateBankAccount();
-                            break;
-                        case 10:
-                            deleteBankAccount();
-                            break;
-                        case 11:
-                            addTransaction();
-                            break;
-                        case 12:
-                            getTransactionsByAccountId();
-                            break;
-                        case 13:
-                            getAllTransactions();
-                            break;
-                        case 14:
-                            System.exit(0);
-                            break;
-                        default:
-                            System.out.println("Invalid choice. Please try again.");
+                    while (true){
+                        System.out.println("1. Add User to bank and create Bank Account");
+                        System.out.println("2. Get User");
+                        System.out.println("3. Get All Users");
+                        System.out.println("4. Update User");
+                        System.out.println("5. Delete User");
+                        System.out.println("6. Create Bank IFSC Code");
+                        System.out.println("7. Get Bank Account Details");
+                        System.out.println("8. Get All Bank Accounts");
+                        System.out.println("9. Update Bank Account");
+                        System.out.println("10. Delete Bank Account");
+                        System.out.println("11. Add Money To Your Account");
+                        System.out.println("12. Withdraw Money From Your Account");
+                        System.out.println("13. Get Transactions by Account ID");
+                        System.out.println("14. Get All Transactions");
+                        System.out.println("15. Exit");
+                        System.out.print("Enter choice: ");
+                        int choice = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+                        switch (choice) {
+                            case 1:
+                                addUser();
+                                break;
+                            case 2:
+                                getUser();
+                                break;
+                            case 3:
+                                getAllUsers();
+                                break;
+                            case 4:
+                                updateUser();
+                                break;
+                            case 5:
+                                deleteUser();
+                                break;
+                            case 6:
+                                addBankAccount();
+                                break;
+                            case 7:
+                                getBankAccount();
+                                break;
+                            case 8:
+                                getAllBankAccounts();
+                                break;
+                            case 9:
+                                updateBankAccount();
+                                break;
+                            case 10:
+                                deleteBankAccount();
+                                break;
+                            case 11:
+                                addTransaction();
+                                break;
+                            case 12:
+                                removeTransaction();
+                                break;
+                            case 13:
+                                getTransactionsByAccountId();
+                                break;
+                            case 14:
+                                getAllTransactions();
+                                break;
+                            case 15:
+                                System.exit(0);
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                        }
                     }
+
+
                 }
 
 
@@ -112,13 +119,20 @@ public class UserController {
         }
     }
 
+
     private void addUser() throws SQLException {
         System.out.print("Enter name: ");
         String name = scanner.nextLine();
         System.out.print("Enter email: ");
         String email = scanner.nextLine();
+
         System.out.print("Enter Minimum Balance of 500 to open a Account: ");
         String balance = scanner.nextLine();
+        while(Integer.parseInt(balance)<500){
+            System.out.println("Enter minimum amount of 500");
+            System.out.println("Re-enter your details...");
+            addUser();
+        }
 
         BankUser bu = new BankUser();
         User u = new User();
@@ -231,7 +245,7 @@ public class UserController {
     }
 
     private void updateBankAccount() {
-        System.out.print("Enter account ID: ");
+        System.out.print("Enter user ID: ");
         int accountId = scanner.nextInt();
         scanner.nextLine(); // Consume newline
         BankAccount bankAccount = userService.getBankAccountByUserId(accountId);
@@ -267,13 +281,34 @@ public class UserController {
         double transactionAmount = scanner.nextDouble();
         scanner.nextLine(); // Consume newline
 
+        System.out.println("Enter EmailId: ");
+        String email = scanner.nextLine();
         Transaction transaction = new Transaction();
         transaction.setAccountId(accountId);
         transaction.setTransactionAmount(transactionAmount);
 
-        userService.addTransaction(transaction);
-        System.out.println("Transaction added successfully.");
+        userService.addTransaction(transaction,email);
+        System.out.println("Money Deposited successfully.");
     }
+
+    private void removeTransaction() {
+        System.out.print("Enter account ID: ");
+        int accountId = scanner.nextInt();
+
+        System.out.print("Enter transaction amount: ");
+        double transactionAmount = scanner.nextDouble();
+        scanner.nextLine(); // Consume newline
+
+        System.out.println("Enter EmailId: ");
+        String email = scanner.nextLine();
+        Transaction transaction = new Transaction();
+        transaction.setAccountId(accountId);
+        transaction.setTransactionAmount(transactionAmount);
+
+        userService.removeTransaction(transaction,email);
+        System.out.println("Money Withdrawed successfully.");
+    }
+
 
     private void getTransactionsByAccountId() {
         System.out.print("Enter account ID: ");

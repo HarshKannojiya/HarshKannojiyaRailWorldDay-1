@@ -64,7 +64,7 @@ public class UserDAOImpl implements UserDAO {
                 User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setName(rs.getString("name"));
-//                user.setAccountNumber(rs.getString("accountNumber"));
+                user.setAccountNumber(rs.getString("accountNumber"));
                 user.setBalance(rs.getDouble("balance"));
                 users.add(user);
             }
@@ -91,10 +91,14 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void deleteUser(String accountNumber) {
         String query = "DELETE FROM users WHERE accountNumber = ?";
+        String query1 = "DELETE FROM bank_user WHERE accountNumber = ?";
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, accountNumber);
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             PreparedStatement pstmt1 = conn.prepareStatement(query1)) {
+            pstmt.setLong(1, Integer.parseInt(accountNumber));
             pstmt.executeUpdate();
+            pstmt1.setLong(1, Integer.parseInt(accountNumber));
+            pstmt1.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
