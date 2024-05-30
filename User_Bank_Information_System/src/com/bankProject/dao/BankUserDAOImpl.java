@@ -19,8 +19,8 @@ public class BankUserDAOImpl implements BankUserDAO {
             pstmt.setString(1, bu.getName());
             pstmt.setString(2, bu.getEmail());
             pstmt.executeUpdate();
-            System.out.println(query3);
-            System.out.println(bu.getEmail());
+//            System.out.println(query3);
+//            System.out.println(bu.getEmail());
             ResultSet rs = stmt.executeQuery(query3);
             String s = "";
             while (rs.next()){

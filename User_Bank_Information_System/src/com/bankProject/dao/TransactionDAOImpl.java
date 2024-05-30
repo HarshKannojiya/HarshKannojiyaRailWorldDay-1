@@ -19,21 +19,61 @@ public class TransactionDAOImpl implements TransactionDAO {
 //    }
 
     @Override
-    public void addTransaction(Transaction transaction) {
+    public void addTransaction(Transaction transaction, String email) {
         String query = "INSERT INTO transactions (account_id, transaction_amount) VALUES (?, ?)";
+        String query1 = "SELECT balance FROM users WHERE email = '"+email+"'";
+        String query2 = "UPDATE users SET balance =? WHERE email=?";
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query1);
+
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             PreparedStatement pstmt1 = conn.prepareStatement(query2)) {
+            Double bal = 0.0;
+            while (rs.next()){
+                bal = rs.getDouble("balance");
+            }
+            System.out.println(bal);
+            pstmt1.setDouble(1,bal+transaction.getTransactionAmount());
+            pstmt1.setString(2,email);
+            pstmt1.executeUpdate();
             pstmt.setInt(1, transaction.getAccountId());
             pstmt.setDouble(2, transaction.getTransactionAmount());
             pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void removeTransaction(Transaction transaction, String email) {
+        String query = "INSERT INTO transactions (account_id, transaction_amount) VALUES (?, ?)";
+        String query1 = "SELECT balance FROM users WHERE email = '"+email+"'";
+        String query10 = "UPDATE users SET balance =? WHERE email=?";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query1);
+
+             PreparedStatement pstmt10 = conn.prepareStatement(query10)) {
+            Double bal = 0.0;
+            while (rs.next()){
+                bal = rs.getDouble("balance");
+            }
+            System.out.println(bal);
+            pstmt10.setDouble(1,bal-transaction.getTransactionAmount());
+            pstmt10.setString(2,email);
+            pstmt10.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+
+
     @Override
     public List<Transaction> getTransactionsByAccountId(int accountId) {
         String query = "SELECT * FROM transactions WHERE account_id = ?";
+
         List<Transaction> transactions = new ArrayList<>();
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {

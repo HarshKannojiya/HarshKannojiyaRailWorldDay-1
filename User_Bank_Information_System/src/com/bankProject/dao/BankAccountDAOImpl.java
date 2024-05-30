@@ -89,10 +89,18 @@ public class BankAccountDAOImpl implements BankAccountDAO {
     @Override
     public void deleteBankAccount(int accountId) {
         String query = "DELETE FROM bank_accounts WHERE account_id = ?";
+        String query1 = "DELETE FROM transactions WHERE account_id = ?";
+        String query2 = "DELETE FROM users WHERE account_id = ?";
+
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             PreparedStatement pstmt1 = conn.prepareStatement(query1)
+        ) {
+            pstmt1.setInt(1, accountId);
+            pstmt1.executeUpdate();
             pstmt.setInt(1, accountId);
             pstmt.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

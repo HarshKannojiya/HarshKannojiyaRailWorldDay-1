@@ -66,9 +66,15 @@ public class UserService {
         bankAccountDAO.deleteBankAccount(accountId);
     }
 
-    public void addTransaction(Transaction transaction) {
-        transactionDAO.addTransaction(transaction);
+    public void addTransaction(Transaction transaction, String email) {
+        transactionDAO.addTransaction(transaction,email);
     }
+
+    public void removeTransaction(Transaction transaction, String email) {
+        transactionDAO.removeTransaction(transaction,email);
+    }
+
+
 
     public List<Transaction> getTransactionsByAccountId(int accountId) {
         return transactionDAO.getTransactionsByAccountId(accountId);
