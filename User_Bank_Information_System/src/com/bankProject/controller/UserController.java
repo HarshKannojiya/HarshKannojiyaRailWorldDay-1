@@ -48,11 +48,11 @@ public class UserController {
                         System.out.println("8. Get All Bank Accounts");
                         System.out.println("9. Update Bank Account");
                         System.out.println("10. Delete Bank Account");
-                        System.out.println("11. Add Money To Your Account");
-                        System.out.println("12. Withdraw Money From Your Account");
-                        System.out.println("13. Get Transactions by Account ID");
-                        System.out.println("14. Get All Transactions");
-                        System.out.println("15. Exit");
+
+                        System.out.println("11. Get Transactions by Account ID");
+                        System.out.println("12. Get All Transactions");
+                        System.out.println("13. Exit");
+                        System.out.println("14. Enter 14 to go to login page");
                         System.out.print("Enter choice: ");
                         int choice = scanner.nextInt();
                         scanner.nextLine(); // Consume newline
@@ -87,23 +87,23 @@ public class UserController {
                             case 10:
                                 deleteBankAccount();
                                 break;
+
                             case 11:
-                                addTransaction();
-                                break;
-                            case 12:
-                                removeTransaction();
-                                break;
-                            case 13:
                                 getTransactionsByAccountId();
                                 break;
-                            case 14:
+                            case 12:
                                 getAllTransactions();
                                 break;
-                            case 15:
+                            case 13:
                                 System.exit(0);
+                                break;
+                            case 14:
+                                start();
                                 break;
                             default:
                                 System.out.println("Invalid choice. Please try again.");
+
+
                         }
                     }
 
@@ -113,8 +113,19 @@ public class UserController {
 
             }
             else if(ch==2) {
-                System.out.println("You can only add yourself in a bank And Create a Bank Account: ");
-                addUser();
+                System.out.println("Enter 1 to Deposit Money");
+                System.out.println("Enter 2 to Withdraw Money");
+                System.out.print("Enter 3 to create account: ");
+                int cho = scanner.nextInt();
+                scanner.nextLine();
+                if(cho==1){
+                    addTransaction();
+                } else if (cho==2) {
+                    removeTransaction();
+                } else if (cho==3) {
+                    addUser();
+                }
+
             }
         }
     }
@@ -125,7 +136,6 @@ public class UserController {
         String name = scanner.nextLine();
         System.out.print("Enter email: ");
         String email = scanner.nextLine();
-
         System.out.print("Enter Minimum Balance of 500 to open a Account: ");
         String balance = scanner.nextLine();
         while(Integer.parseInt(balance)<500){
